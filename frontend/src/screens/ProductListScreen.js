@@ -43,13 +43,12 @@ const ProductListScreen = ({ history, match }) => {
       type: PRODUCT_CREATE_RESET,
     });
 
-    if (!userInfo.isAdmin) {
-      history.push("/login");
-    }
-    if (successCreate) {
+    if (userInfo && userInfo.isAdmin && successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`);
-    } else {
+    } else if (userInfo && userInfo.isAdmin && !successCreate) {
       dispatch(listProducts("", pageNumber));
+    } else {
+      history.push("/login");
     }
   }, [
     dispatch,

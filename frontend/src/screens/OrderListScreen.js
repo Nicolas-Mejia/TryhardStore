@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { listOrders } from "../actions/orderActions";
+import { ORDER_DETAILS_RESET } from "../constants/orderConstants";
 
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const OrderListScreen = ({ history }) => {
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listOrders());
+      dispatch({ type: ORDER_DETAILS_RESET });
     } else {
       history.push("/login");
     }

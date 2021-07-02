@@ -26,7 +26,7 @@ const PaymentScreen = ({ history }) => {
   return (
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />
-      <h1>Envío</h1>
+      <h1>Pago</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label as="legend">Seleccionar Medio de Pago</Form.Label>

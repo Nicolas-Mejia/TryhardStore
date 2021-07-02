@@ -79,13 +79,13 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.brand = brand;
     product.category = category;
     product.countInStock = countInStock;
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
   } else {
     res.status(404);
     throw new Error("Producto no encontrado");
   }
-
-  const updatedProduct = await product.save();
-  res.status(201).json(updatedProduct);
 });
 
 //Crear review

@@ -17,7 +17,6 @@ const importData = async () => {
     await Product.deleteMany();
     await User.deleteMany();
 
-    // me deja un array de los usuarios creados
     const createdUsers = await User.insertMany(users);
 
     const adminUser = createdUsers[0]._id;
@@ -28,7 +27,7 @@ const importData = async () => {
 
     await Product.insertMany(sampleProducts);
 
-    console.log("Data Imported!");
+    console.log("Se subió correctamente");
     process.exit();
   } catch (error) {
     console.error(`${error}`);
@@ -42,7 +41,7 @@ const destroyData = async () => {
     await Product.deleteMany();
     await User.deleteMany();
 
-    console.log("Data Destroyed!");
+    console.log("Se eliminó correctamente");
     process.exit();
   } catch (error) {
     console.error(`${error}`);

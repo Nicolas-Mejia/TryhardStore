@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -34,6 +35,7 @@ const CartScreen = ({ match, location, history }) => {
   };
 
   const checkoutHandler = () => {
+    dispatch({ type: ORDER_CREATE_RESET });
     history.push("/login?redirect=shipping");
   };
 
