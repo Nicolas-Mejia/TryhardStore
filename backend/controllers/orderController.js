@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
+import { updateStock } from "./productController.js";
 
 //Enviar pedido
 const addOrderItems = asyncHandler(async (req, res) => {
@@ -26,6 +27,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice,
     });
+
+    updateStock(orderItems);
 
     const createdOrder = await order.save();
 

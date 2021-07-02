@@ -3,7 +3,7 @@ import Product from "../models/productModel.js";
 
 //Traer los productos
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 10;
+  const pageSize = 5;
   const page = Number(req.query.pageNumber) || 1;
 
   const keyword = req.query.keyword
@@ -131,6 +131,19 @@ const getTopProducts = asyncHandler(async (req, res) => {
   res.json(products);
 });
 
+//Actualizar stock
+const updateStock = asyncHandler(async (products) => {
+  products.map(async (oldProduct) => {
+    const product = await Product.findById(oldProduct.product);
+
+    if (product) {
+      product.countInStock = product.countInStock - oldProduct.qty;
+
+      await product.save();
+    }
+  });
+});
+
 export {
   getProducts,
   getProductById,
@@ -139,4 +152,5 @@ export {
   createProduct,
   createProductReview,
   getTopProducts,
+  updateStock,
 };

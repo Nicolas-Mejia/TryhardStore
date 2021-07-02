@@ -8,7 +8,7 @@ import Paginate from "../components/Paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productActions";
 import ProductCarousel from "../components/ProductCarousel";
-import { PRODUCT_DETAILS_RESET } from "../constants/productConstants";
+import { PRODUCT_CREATE_REVIEW_RESET, PRODUCT_DETAILS_RESET } from "../constants/productConstants";
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
@@ -19,6 +19,7 @@ const HomeScreen = ({ match }) => {
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
+  dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
 
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber));
