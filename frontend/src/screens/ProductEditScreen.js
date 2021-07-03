@@ -15,13 +15,14 @@ import {
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id;
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(1);
   const [image, setImage] = useState("");
   const [platform, setPlatform] = useState("");
   const [category, setCategory] = useState("");
-  const [countInStock, setCountInStock] = useState(0);
+  const [countInStock, setCountInStock] = useState(1);
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -80,18 +81,28 @@ const ProductEditScreen = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      updateProduct({
-        _id: productId,
-        name,
-        price,
-        image,
-        brand: platform,
-        description,
-        category,
-        countInStock,
-      })
-    );
+    if (name.length < 3) {
+      setMessage("El nombre tiene que tener un largo mínimo de 4 caracteres");
+    } else if (!/^[a-zA-Z\s]+$/.test(category)) {
+      setMessage("La categoría tiene que tener solo letras");
+    } else if (price < 50) {
+      setMessage("El precio tiene que ser mayor a 50");
+    } else if (countInStock < 1) {
+      setMessage("El stock debe ser mayor a 0");
+    } else {
+      dispatch(
+        updateProduct({
+          _id: productId,
+          name,
+          price,
+          image,
+          brand: platform,
+          description,
+          category,
+          countInStock,
+        })
+      );
+    }
   };
 
   return (
@@ -102,6 +113,7 @@ const ProductEditScreen = ({ match, history }) => {
       <FormContainer>
         <h1>Editar Producto</h1>
         {loadingUpdate && <Loader />}
+        {message && <Message variant="danger">{message}</Message>}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader />

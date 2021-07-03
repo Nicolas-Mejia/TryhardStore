@@ -13,7 +13,7 @@ const ProfileScreen = ({ location, history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
 
   const dispatch = useDispatch();
 
@@ -46,10 +46,17 @@ const ProfileScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+      setMessage("El nombre tiene que ser solo letras");
+    } else if (password !== "" && password !== confirmPassword) {
       setMessage("Las contraseñas no coinciden");
+    } else if ((password !== "" && password.length < 8) || name.length < 6) {
+      setMessage(
+        "La contraseña y el nombre deben tener un largo mínimo de 8 y 6 caracteres, respectivamente"
+      );
     } else {
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      setMessage("");
     }
   };
 
@@ -71,7 +78,7 @@ const ProfileScreen = ({ location, history }) => {
               onChange={(e) => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Form.Group controlId="email">
+          <Form.Group controlId="email" className="margin">
             <Form.Label>Mail</Form.Label>
             <Form.Control
               type="email"
@@ -89,7 +96,7 @@ const ProfileScreen = ({ location, history }) => {
               onChange={(e) => setPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Form.Group controlId="confirmPassword">
+          <Form.Group controlId="confirmPassword" className="margin">
             <Form.Label>Confirmar Contraseña</Form.Label>
             <Form.Control
               type="password"

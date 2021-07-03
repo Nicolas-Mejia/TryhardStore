@@ -31,7 +31,7 @@ const PaymentScreen = ({ history }) => {
         <Form.Group>
           <Form.Label as="legend">Seleccionar Medio de Pago</Form.Label>
 
-          <Col>
+          <Col className="margin">
             <Form.Check
               type="radio"
               label="PayPal"

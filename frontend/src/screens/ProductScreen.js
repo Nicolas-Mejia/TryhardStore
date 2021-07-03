@@ -150,7 +150,7 @@ const ProductScreen = ({ history, match }) => {
           </Row>
           <Row>
             <Col md={6}>
-              <h2>Opiniones</h2>
+              <h2 className="margin">Opiniones</h2>
               {product.reviews.length === 0 && (
                 <Message>No hay opiniones</Message>
               )}

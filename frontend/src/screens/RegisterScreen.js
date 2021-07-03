@@ -29,8 +29,14 @@ const RegisterScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+      setMessage("El nombre tiene que ser solo letras");
+    } else if (password !== confirmPassword) {
       setMessage("Las contraseñas no coinciden");
+    } else if (password.length < 8 || name.length < 6) {
+      setMessage(
+        "La contraseña y el nombre deben tener un largo mínimo de 8 y 6 caracteres, respectivamente"
+      );
     } else {
       dispatch(register(name, email, password));
     }
@@ -52,7 +58,7 @@ const RegisterScreen = ({ location, history }) => {
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Form.Group controlId="email">
+        <Form.Group controlId="email" className="margin">
           <Form.Label>Mail</Form.Label>
           <Form.Control
             type="email"
@@ -70,7 +76,7 @@ const RegisterScreen = ({ location, history }) => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Form.Group controlId="confirmPassword">
+        <Form.Group controlId="confirmPassword" className="margin">
           <Form.Label>Confirmar Contraseña</Form.Label>
           <Form.Control
             type="password"
