@@ -32,7 +32,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 userSchema.pre("save", async function (next) {
-  // Si modifico un dato que no sea la pass
+  // Si modifico un dato que no sea la pass, salteo
   if (!this.isModified("password")) {
     next();
   }
